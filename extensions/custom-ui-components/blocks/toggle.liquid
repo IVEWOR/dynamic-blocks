@@ -3,59 +3,74 @@
       background-color: {{ block.settings.bg_color }};
       overflow: hidden;
   }
-
   .db-toggle {
       padding: 0 16px;
-      border: 1px solid #000;
+      border: 1px solid #fff;
       margin: 10px 0;
+      position: relative;
   }
   .db-toggle__title {
       color: {{ block.settings.title_color }};
       cursor: pointer;
   }
+  .db-toggle__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+  }
   .db-toggle__content {
       color: {{ block.settings.content_color }};
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out;
+      opacity: 0;
+  }
+  .db-toggle__content.active {
+      max-height: 500px;
+      opacity: 1;
   }
 </style>
 
 <div class="db-toggle">
-  <div>
+  <div class="db-toggle__header">
     <{{ block.settings.title_tag }} class="db-toggle__title">
       {{- block.settings.title -}}
     </{{ block.settings.title_tag }}>
     {% if block.settings.icon == 'arrow' %}
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        width="16"
-        height="16"
-        fill="currentColor"
-        class="bi bi-arrow-down"
-        viewBox="0 0 16 16"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="1.5"
+        stroke="{{ block.settings.icon_color }}"
+        height="{{ block.settings.icon_size }}"
+        width="{{ block.settings.icon_size }}"
       >
-        <path fill-rule="evenodd" d="M8 3.5a.5.5 0 0 1 .5.5v7.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 0 1 .708-.708L7.5 11.293V3a.5.5 0 0 1 .5-.5z"/>
+        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 13.5 12 21m0 0-7.5-7.5M12 21V3" />
       </svg>
     {% elsif block.settings.icon == 'chevron' %}
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        width="16"
-        height="16"
-        fill="currentColor"
-        class="bi bi-chevron-down"
-        viewBox="0 0 16 16"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="1.5"
+        stroke="{{ block.settings.icon_color }}"
+        height="{{ block.settings.icon_size }}"
+        width="{{ block.settings.icon_size }}"
       >
-        <path fill-rule="evenodd" d="M8 4.5a.5.5 0 0 1 .354.854l-3.792 3.792a.5.5 0 0 1-.708-.708L8 5.793l3.146 3.146a.5.5 0 0 1-.708.708L8.354 5.854A.5.5 0 0 1 8 5.5z"/>
+        <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
       </svg>
     {% elsif block.settings.icon == 'plus' %}
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        width="16"
-        height="16"
-        fill="currentColor"
-        class="bi bi-plus"
-        viewBox="0 0 16 16"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="1.5"
+        stroke="{{ block.settings.icon_color }}"
+        height="{{ block.settings.icon_size }}"
+        width="{{ block.settings.icon_size }}"
       >
-        <path fill-rule="evenodd" d="M8 1.5a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0v-6a.5.5 0 0 1 .5-.5zm6.5 7a.5.5 0 0 1-.5.5h-6a.5.5 0 0
-        1 0-1h6a.5.5 0 0 1 .5.5zm-6.5 6a.5.5 0 0 1-.5.5v-6a.5.5 0 0 1 1 0v6a.5.5 0 0 1-.5.5zm-6-6a.5.5 0 0 1-.5-.5v-6a.5.5 0 0 1 1 0v6a.5.5 0 0 1-.5.5z"/>
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
       </svg>
     {% endif %}
   </div>
@@ -63,6 +78,19 @@
     {{- block.settings.content -}}
   </div>
 </div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const db_toggle = document.querySelector('.db-toggle');
+    const db_header = db_toggle.querySelector('.db-toggle__header');
+    const db_content = db_toggle.querySelector('.db-toggle__content');
+
+    db_header.addEventListener('click', function () {
+      console.log('clicked');
+      db_content.classList.toggle('active');
+    });
+  });
+</script>
 
 {% schema %}
 {
@@ -124,7 +152,7 @@
       "type": "number",
       "id": "icon_size",
       "label": "Icon Size",
-      "default": 22
+      "default": 20
     },
     {
       "type": "color",
