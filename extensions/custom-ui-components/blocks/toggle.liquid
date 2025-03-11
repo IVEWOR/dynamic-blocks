@@ -3,33 +3,47 @@
       background-color: {{ block.settings.bg_color }};
       overflow: hidden;
   }
-  .db-toggle {
+  #shopify-block-{{ block.id }} .db-toggle {
       padding: 0 16px;
-      border: 1px solid #fff;
       margin: 10px 0;
       position: relative;
+      border: {{ block.settings.border_width }}px solid {{ block.settings.border_color }};
+      border-radius: {{ block.settings.border_radius }}px;
   }
-  .db-toggle__title {
+  #shopify-block-{{ block.id }} .db-toggle__title {
       color: {{ block.settings.title_color }};
-      cursor: pointer;
   }
-  .db-toggle__header {
+  #shopify-block-{{ block.id }} .db-toggle__header {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      cursor: pointer;
   }
-  .db-toggle__content {
+  #shopify-block-{{ block.id }} .db-toggle__content {
       color: {{ block.settings.content_color }};
       max-height: 0;
       overflow: hidden;
       transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out;
       opacity: 0;
   }
-  .db-toggle__content.active {
+
+  #shopify-block-{{ block.id }} .db-toggle__content * {
+    color: {{ block.settings.content_color }};
+  }
+
+  #shopify-block-{{ block.id }} .db-toggle__content.active {
       max-height: 500px;
       opacity: 1;
   }
+  #shopify-block-{{ block.id }} .db-toggle__icon {
+      transition: transform 0.3s ease-in-out;
+  }
+  #shopify-block-{{ block.id }} .db-toggle__icon.active {
+      transform: rotate(180deg);
+  }
 </style>
+
+<script src="{{ 'script.js' | asset_url }}" defer></script>
 
 <div class="db-toggle">
   <div class="db-toggle__header">
@@ -45,6 +59,7 @@
         stroke="{{ block.settings.icon_color }}"
         height="{{ block.settings.icon_size }}"
         width="{{ block.settings.icon_size }}"
+        class="db-toggle__icon"
       >
         <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 13.5 12 21m0 0-7.5-7.5M12 21V3" />
       </svg>
@@ -57,6 +72,7 @@
         stroke="{{ block.settings.icon_color }}"
         height="{{ block.settings.icon_size }}"
         width="{{ block.settings.icon_size }}"
+        class="db-toggle__icon"
       >
         <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
       </svg>
@@ -69,6 +85,7 @@
         stroke="{{ block.settings.icon_color }}"
         height="{{ block.settings.icon_size }}"
         width="{{ block.settings.icon_size }}"
+        class="db-toggle__icon"
       >
         <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
       </svg>
@@ -78,19 +95,6 @@
     {{- block.settings.content -}}
   </div>
 </div>
-
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
-    const db_toggle = document.querySelector('.db-toggle');
-    const db_header = db_toggle.querySelector('.db-toggle__header');
-    const db_content = db_toggle.querySelector('.db-toggle__content');
-
-    db_header.addEventListener('click', function () {
-      console.log('clicked');
-      db_content.classList.toggle('active');
-    });
-  });
-</script>
 
 {% schema %}
 {
@@ -165,6 +169,24 @@
       "id": "bg_color",
       "label": "Background Color",
       "default": "#c1c1c1"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Border Color",
+      "default": "#fff"
+    },
+    {
+      "type": "number",
+      "id": "border_radius",
+      "label": "Border Radius",
+      "default": 0
+    },
+    {
+      "type": "number",
+      "id": "border_width",
+      "label": "Border Width",
+      "default": 1
     }
   ]
 }

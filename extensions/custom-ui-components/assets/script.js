@@ -1,13 +1,18 @@
-document.addEventListener("DOMContentLoaded", function() {
-    const toggles = document.querySelectorAll(".db-toggle");
+document.addEventListener("DOMContentLoaded", function () {
+  const db_toggles = document.querySelectorAll(".db-toggle");
 
-    toggles.forEach(toggle => {
-        toggle.addEventListener("click", function() {
-            this.classList.toggle("active");
-            const content = this.querySelector(".db-toggle-content");
-            if (content) {
-                content.style.display = content.style.display === "block" ? "none" : "block";
-            }
-        });
+  db_toggles.forEach((toggle) => {
+    const db_header = toggle.querySelector(".db-toggle__header");
+    const db_content = toggle.querySelector(".db-toggle__content");
+    const db_icon = toggle.querySelector(".db-toggle__icon");
+
+    db_header.addEventListener("click", function () {
+      console.log("clicked");
+      // Toggle active class on the specific content
+      db_content.classList.toggle("active");
+
+      // Toggle icon
+      db_icon.classList.toggle("active");
     });
+  });
 });
