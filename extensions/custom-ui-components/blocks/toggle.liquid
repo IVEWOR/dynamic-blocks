@@ -1,0 +1,143 @@
+<style>
+  #shopify-section-{{ section.id }} {
+      background-color: {{ block.settings.bg_color }};
+      overflow: hidden;
+  }
+
+  .db-toggle {
+      padding: 0 16px;
+      border: 1px solid #000;
+      margin: 10px 0;
+  }
+  .db-toggle__title {
+      color: {{ block.settings.title_color }};
+      cursor: pointer;
+  }
+  .db-toggle__content {
+      color: {{ block.settings.content_color }};
+  }
+</style>
+
+<div class="db-toggle">
+  <div>
+    <{{ block.settings.title_tag }} class="db-toggle__title">
+      {{- block.settings.title -}}
+    </{{ block.settings.title_tag }}>
+    {% if block.settings.icon == 'arrow' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="16"
+        height="16"
+        fill="currentColor"
+        class="bi bi-arrow-down"
+        viewBox="0 0 16 16"
+      >
+        <path fill-rule="evenodd" d="M8 3.5a.5.5 0 0 1 .5.5v7.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 0 1 .708-.708L7.5 11.293V3a.5.5 0 0 1 .5-.5z"/>
+      </svg>
+    {% elsif block.settings.icon == 'chevron' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="16"
+        height="16"
+        fill="currentColor"
+        class="bi bi-chevron-down"
+        viewBox="0 0 16 16"
+      >
+        <path fill-rule="evenodd" d="M8 4.5a.5.5 0 0 1 .354.854l-3.792 3.792a.5.5 0 0 1-.708-.708L8 5.793l3.146 3.146a.5.5 0 0 1-.708.708L8.354 5.854A.5.5 0 0 1 8 5.5z"/>
+      </svg>
+    {% elsif block.settings.icon == 'plus' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="16"
+        height="16"
+        fill="currentColor"
+        class="bi bi-plus"
+        viewBox="0 0 16 16"
+      >
+        <path fill-rule="evenodd" d="M8 1.5a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0v-6a.5.5 0 0 1 .5-.5zm6.5 7a.5.5 0 0 1-.5.5h-6a.5.5 0 0
+        1 0-1h6a.5.5 0 0 1 .5.5zm-6.5 6a.5.5 0 0 1-.5.5v-6a.5.5 0 0 1 1 0v6a.5.5 0 0 1-.5.5zm-6-6a.5.5 0 0 1-.5-.5v-6a.5.5 0 0 1 1 0v6a.5.5 0 0 1-.5.5z"/>
+      </svg>
+    {% endif %}
+  </div>
+  <div class="db-toggle__content">
+    {{- block.settings.content -}}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Toggle",
+  "target": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Title"
+    },
+    {
+      "type": "select",
+      "id": "title_tag",
+      "label": "Title Tag",
+      "options": [
+        { "value": "h1", "label": "H1" },
+        { "value": "h2", "label": "H2" },
+        { "value": "h3", "label": "H3" },
+        { "value": "h4", "label": "H4" },
+        { "value": "h5", "label": "H5" },
+        { "value": "h6", "label": "H6" },
+        { "value": "p", "label": "P" },
+        { "value": "span", "label": "Span" },
+        { "value": "div", "label": "Div" }
+      ],
+      "default": "h3"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title Color",
+      "default": "#000"
+    },
+    {
+      "type": "richtext",
+      "id": "content",
+      "label": "Content"
+    },
+    {
+      "type": "color",
+      "id": "content_color",
+      "label": "Content Color",
+      "default": "#000"
+    },
+    {
+      "type": "select",
+      "id": "icon",
+      "label": "Icon",
+      "options": [
+        { "value": "arrow", "label": "Arrow" },
+        { "value": "chevron", "label": "Chevron" },
+        { "value": "plus", "label": "Plus" }
+      ],
+      "default": "arrow"
+    },
+    {
+      "type": "number",
+      "id": "icon_size",
+      "label": "Icon Size",
+      "default": 22
+    },
+    {
+      "type": "color",
+      "id": "icon_color",
+      "label": "Icon Color",
+      "default": "#fff"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#c1c1c1"
+    }
+  ]
+}
+{% endschema %}

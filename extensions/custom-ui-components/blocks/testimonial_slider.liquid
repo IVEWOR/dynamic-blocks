@@ -1,0 +1,58 @@
+<div style="background-color: {{ block.settings.background }}; padding: {{ block.settings.spacing }}px;">
+  <div class="testimonial-slider">
+    {% for block in section.blocks %}
+      {% if block.type == "testimonial" %}
+        <div class="testimonial">
+          {% if block.settings.image %}
+            <img src="{{ block.settings.image | image_url: '100x100', crop: 'center' }}" alt="{{ block.settings.name }}" height="100" width="100" loading="lazy">
+          {% endif %}
+          <p class="quote">{{ block.settings.quote }}</p>
+          <p class="name">- {{ block.settings.name }}</p>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+</div>
+
+<style>
+  .testimonial-slider {
+    display: flex;
+    overflow-x: auto;
+    gap: 20px;
+  }
+  .testimonial {
+    min-width: 300px;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Testimonial Slider",
+  "target": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Testimonials"
+    },
+    {
+      "type": "range",
+      "id": "spacing",
+      "min": 10,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Spacing",
+      "default": 20
+    },
+    {
+      "type": "color",
+      "id": "background",
+      "label": "Background Color",
+      "default": "#f7f7f7"
+    }
+  ]
+}
+{% endschema %}
