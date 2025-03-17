@@ -43,8 +43,6 @@
   }
 </style>
 
-<script src="{{ 'script.js' | asset_url }}" defer></script>
-
 <div class="db-toggle">
   <div class="db-toggle__header">
     <{{ block.settings.title_tag }} class="db-toggle__title">
@@ -95,6 +93,25 @@
     {{- block.settings.content -}}
   </div>
 </div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const db_toggle = document.querySelector('#shopify-block-{{ block.id }} .db-toggle');
+
+    const db_header = db_toggle.querySelector('#shopify-block-{{ block.id }} .db-toggle__header');
+    const db_content = db_toggle.querySelector('#shopify-block-{{ block.id }} .db-toggle__content');
+    const db_icon = db_toggle.querySelector('#shopify-block-{{ block.id }} .db-toggle__icon');
+
+    db_header.addEventListener('click', function () {
+      console.log('clicked');
+      // Toggle active class on the specific content
+      db_content.classList.toggle('active');
+
+      // Toggle icon
+      db_icon.classList.toggle('active');
+    });
+  });
+</script>
 
 {% comment %} Schema {% endcomment %}
 {% schema %}
