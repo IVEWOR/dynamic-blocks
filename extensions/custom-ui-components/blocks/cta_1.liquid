@@ -1,0 +1,188 @@
+<style>
+    .db-cta_1 {
+        text-align: {{ block.settings.alignment }}px;
+    }
+
+    .db-cta_1__header {
+      color: {{ block.settings.title_color }};
+      font-size: {{ block.settings.title_size }}px;
+      margin-bottom: {{ block.settings.title_margin_bottom }}px;
+  }
+
+    .db-cta_1__content {
+        margin-bottom: {{ block.settings.content_margin_bottom }}px;
+    }
+
+    .db-cta_1__content * {
+        color: {{ block.settings.content_color }};
+        font-size: {{ block.settings.content_size }}px;
+    }
+
+    .db-cta_1__button {
+        background-color: {{ block.settings.button_background_color }};
+        color: {{ block.settings.button_text_color }};
+        border: 1px solid {{ block.settings.button_border_color }};
+        border-radius: {{ block.settings.button_border_radius }};
+        padding: {{ block.settings.button_padding }};
+        font-size: {{ block.settings.button_font_size }};
+        font-weight: {{ block.settings.button_font_weight }};
+    }
+
+    .db-cta_1__button:hover {
+        background-color: {{ block.settings.button_hover_background_color }};
+        color: {{ block.settings.button_hover_text_color }};
+    }
+</style>
+
+<div class="db-cta_1">
+  <h2 class="db-cta_1__header">{{ block.settings.title }}</h2>
+  <div class="db-cta_1__content">{{ block.settings.content }}</div>
+  <a
+    href="{{ block.settings.button_url }}"
+    class="db-cta_1__button"
+  >
+    {{- block.settings.button_text -}}
+  </a>
+</div>
+
+{% schema %}
+{
+  "name": "CTA 1",
+  "target": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Ready to get started?"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title Color",
+      "default": "#333333"
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "label": "Title Size",
+      "min": 1,
+      "max": 100,
+      "default": 26
+    },
+    {
+      "type": "range",
+      "id": "title_margin_bottom",
+      "label": "Title Margin Bottom",
+      "min": 0,
+      "max": 100,
+      "default": 20
+    },
+    {
+      "type": "richtext",
+      "id": "content",
+      "label": "Content",
+      "default": "<p>Get in touch with us today to learn more about our services.</p>"
+    },
+    {
+      "type": "range",
+      "id": "content_size",
+      "label": "Content Size",
+      "min": 1,
+      "max": 100,
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "content_margin_bottom",
+      "label": "Content Margin Bottom",
+      "min": 0,
+      "max": 100,
+      "default": 20
+    },
+    {
+      "type": "color",
+      "id": "content_color",
+      "label": "Content Color",
+      "default": "#333333"
+    },
+    {
+      "type": "select",
+      "id": "alignment",
+      "label": "Alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "url",
+      "id": "button_url",
+      "label": "Button URL"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text",
+      "default": "Get Started"
+    },
+    {
+      "type": "color",
+      "id": "button_background_color",
+      "label": "Button Background Color",
+      "default": "#f8f8f8"
+    },
+    {
+      "type": "text",
+      "id": "button_hover_background_color",
+      "label": "Button Hover Background Color",
+      "default": "#333333"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button Text Color",
+      "default": "#333333"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_text_color",
+      "label": "Button Hover Text Color",
+      "default": "#f8f8f8"
+    },
+    {
+      "type": "color",
+      "id": "button_border_color",
+      "label": "Button Border Color",
+      "default": "#333333"
+    },
+    {
+      "type": "text",
+      "id": "button_border_radius",
+      "label": "Button Border Radius",
+      "default": "5px"
+    },
+    {
+      "type": "text",
+      "id": "button_padding",
+      "label": "Button Padding",
+      "placeholder": "top right bottom left",
+      "default": "10px 20px 10px 20px"
+    },
+    {
+      "type": "text",
+      "id": "button_font_size",
+      "label": "Button Font Size",
+      "default": "16px"
+    },
+    {
+      "type": "text",
+      "id": "button_font_weight",
+      "label": "Button Font Weight",
+      "default": "500"
+    }
+  ]
+}
+{% endschema %}
