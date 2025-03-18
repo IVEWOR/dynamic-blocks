@@ -1,6 +1,19 @@
+{% comment %} Need to create backgrounds for users and linked it to that {% endcomment %}
+
 <style>
+  #shopify-section-{{ section.id }} {
+    background: {{ block.settings.background_color }};
+    {% if block.settings.background_image != blank %}
+      background-image: url({{ block.settings.background_image }});
+      background-size: cover;
+      background-position: center;
+    {% endif %}
+    overflow: hidden;
+
+  }
     .db-cta_1 {
-        text-align: {{ block.settings.alignment }}px;
+        text-align: {{ block.settings.alignment }};
+        padding: {{ block.settings.section_padding_top_bottom }}px 0;
     }
 
     .db-cta_1__header {
@@ -22,10 +35,14 @@
         background-color: {{ block.settings.button_background_color }};
         color: {{ block.settings.button_text_color }};
         border: 1px solid {{ block.settings.button_border_color }};
-        border-radius: {{ block.settings.button_border_radius }};
-        padding: {{ block.settings.button_padding }};
-        font-size: {{ block.settings.button_font_size }};
+        border-radius: {{ block.settings.button_border_radius }}px;
+        padding: {{ block.settings.button_padding_top_bottom }}px {{ block.settings.button_padding_left_right }}px;
+        font-size: {{ block.settings.button_font_size }}px;
         font-weight: {{ block.settings.button_font_weight }};
+        display: inline-block;
+        text-decoration: none;
+        line-height: 1;
+        transition: background-color 0.3s ease, color 0.3s ease;
     }
 
     .db-cta_1__button:hover {
@@ -34,15 +51,18 @@
     }
 </style>
 
-<div class="db-cta_1">
-  <h2 class="db-cta_1__header">{{ block.settings.title }}</h2>
-  <div class="db-cta_1__content">{{ block.settings.content }}</div>
-  <a
-    href="{{ block.settings.button_url }}"
-    class="db-cta_1__button"
-  >
-    {{- block.settings.button_text -}}
-  </a>
+<div class="db-cta_1 {{ block.settings.custom_classes }}">
+  {% if block.settings.title != blank %}
+    <h2 class="db-cta_1__header">{{ block.settings.title }}</h2>
+  {% endif %}
+  {% if block.settings.content != blank %}
+    <div class="db-cta_1__content">{{ block.settings.content }}</div>
+  {% endif %}
+  {% if block.settings.button_text != blank and block.settings.button_url != blank %}
+    <a href="{{ block.settings.button_url }}" class="db-cta_1__button" aria-label="{{ block.settings.button_text }}">
+      {{- block.settings.button_text -}}
+    </a>
+  {% endif %}
 </div>
 
 {% schema %}
@@ -50,6 +70,55 @@
   "name": "CTA 1",
   "target": "section",
   "settings": [
+    {
+      "type": "paragraph",
+      "content": "To learn how to use this section checkout [docs](https://deepslog.com)"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "alignment",
+      "label": "Alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "color",
+      "id": "section_background_color",
+      "label": "Section Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "image_picker",
+      "id": "section_background_image",
+      "label": "Section Background Image"
+    },
+    {
+      "type": "range",
+      "id": "section_padding_top_bottom",
+      "label": "Section Padding Top and Bottom",
+      "min": 0,
+      "max": 300,
+      "step": 5,
+      "unit": "px",
+      "default": 70
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "custom_classes",
+      "label": "Custom Classes"
+    },
     {
       "type": "text",
       "id": "title",
@@ -68,6 +137,8 @@
       "label": "Title Size",
       "min": 1,
       "max": 100,
+      "step": 1,
+      "unit": "px",
       "default": 26
     },
     {
@@ -76,6 +147,8 @@
       "label": "Title Margin Bottom",
       "min": 0,
       "max": 100,
+      "step": 1,
+      "unit": "px",
       "default": 20
     },
     {
@@ -90,14 +163,18 @@
       "label": "Content Size",
       "min": 1,
       "max": 100,
+      "step": 1,
+      "unit": "px",
       "default": 16
     },
     {
       "type": "range",
       "id": "content_margin_bottom",
       "label": "Content Margin Bottom",
-      "min": 0,
+      "min": 14,
       "max": 100,
+      "step": 1,
+      "unit": "px",
       "default": 20
     },
     {
@@ -107,15 +184,8 @@
       "default": "#333333"
     },
     {
-      "type": "select",
-      "id": "alignment",
-      "label": "Alignment",
-      "options": [
-        { "value": "left", "label": "Left" },
-        { "value": "center", "label": "Center" },
-        { "value": "right", "label": "Right" }
-      ],
-      "default": "center"
+      "type": "header",
+      "content": "Button"
     },
     {
       "type": "url",
@@ -129,13 +199,60 @@
       "default": "Get Started"
     },
     {
+      "type": "range",
+      "id": "button_font_size",
+      "label": "Button Font Size",
+      "min": 1,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "select",
+      "id": "button_font_weight",
+      "label": "Button Font Weight",
+      "options": [
+        { "value": "100", "label": "100" },
+        { "value": "200", "label": "200" },
+        { "value": "300", "label": "300" },
+        { "value": "400", "label": "400" },
+        { "value": "500", "label": "500" },
+        { "value": "600", "label": "600" },
+        { "value": "700", "label": "700" },
+        { "value": "800", "label": "800" },
+        { "value": "900", "label": "900" }
+      ],
+      "default": "500"
+    },
+    {
+      "type": "range",
+      "id": "button_padding_top_bottom",
+      "label": "Button Padding Top and Bottom",
+      "min": 1,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "button_padding_left_right",
+      "label": "Button Padding Left and Right",
+      "min": 1,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 24
+    },
+    {
       "type": "color",
       "id": "button_background_color",
       "label": "Button Background Color",
       "default": "#f8f8f8"
     },
     {
-      "type": "text",
+      "type": "color",
       "id": "button_hover_background_color",
       "label": "Button Hover Background Color",
       "default": "#333333"
@@ -159,29 +276,14 @@
       "default": "#333333"
     },
     {
-      "type": "text",
+      "type": "range",
       "id": "button_border_radius",
       "label": "Button Border Radius",
-      "default": "5px"
-    },
-    {
-      "type": "text",
-      "id": "button_padding",
-      "label": "Button Padding",
-      "placeholder": "top right bottom left",
-      "default": "10px 20px 10px 20px"
-    },
-    {
-      "type": "text",
-      "id": "button_font_size",
-      "label": "Button Font Size",
-      "default": "16px"
-    },
-    {
-      "type": "text",
-      "id": "button_font_weight",
-      "label": "Button Font Weight",
-      "default": "500"
+      "min": 1,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "default": 5
     }
   ]
 }
