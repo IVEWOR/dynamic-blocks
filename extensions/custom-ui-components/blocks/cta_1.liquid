@@ -1,63 +1,78 @@
-{% comment %} Need to create backgrounds for users and linked it to that {% endcomment %}
+{% comment %}
+  Need to create attractive backgrounds for users and link it to that.
+  The section background color and image are applied here.
+{% endcomment %}
 
 <style>
+  /* Section Container: Applies background settings based on block options */
   #shopify-section-{{ section.id }} {
-    background: {{ block.settings.background_color }};
+    background: {{ block.settings.section_background_color }};
     {% if block.settings.background_image != blank %}
       background-image: url({{ block.settings.background_image }});
       background-size: cover;
       background-position: center;
     {% endif %}
     overflow: hidden;
-
-  }
-    .db-cta_1 {
-        text-align: {{ block.settings.alignment }};
-        padding: {{ block.settings.section_padding_top_bottom }}px 0;
-    }
-
-    .db-cta_1__header {
-      color: {{ block.settings.title_color }};
-      font-size: {{ block.settings.title_size }}px;
-      margin-bottom: {{ block.settings.title_margin_bottom }}px;
   }
 
-    .db-cta_1__content {
-        margin-bottom: {{ block.settings.content_margin_bottom }}px;
-    }
+  /* CTA Container: Aligns and applies vertical padding */
+  .db-cta_1 {
+    text-align: {{ block.settings.alignment }};
+    padding: {{ block.settings.section_padding_top_bottom }}px 0;
+  }
 
-    .db-cta_1__content * {
-        color: {{ block.settings.content_color }};
-        font-size: {{ block.settings.content_size }}px;
-    }
+  /* Header Styling: Sets text color, font size, and spacing */
+  .db-cta_1__header {
+    color: {{ block.settings.title_color }};
+    font-size: {{ block.settings.title_size }}px;
+    margin-bottom: {{ block.settings.title_margin_bottom }}px;
+  }
 
-    .db-cta_1__button {
-        background-color: {{ block.settings.button_background_color }};
-        color: {{ block.settings.button_text_color }};
-        border: 1px solid {{ block.settings.button_border_color }};
-        border-radius: {{ block.settings.button_border_radius }}px;
-        padding: {{ block.settings.button_padding_top_bottom }}px {{ block.settings.button_padding_left_right }}px;
-        font-size: {{ block.settings.button_font_size }}px;
-        font-weight: {{ block.settings.button_font_weight }};
-        display: inline-block;
-        text-decoration: none;
-        line-height: 1;
-        transition: background-color 0.3s ease, color 0.3s ease;
-    }
+  /* Content Container: Applies margin-bottom for spacing */
+  .db-cta_1__content {
+    margin-bottom: {{ block.settings.content_margin_bottom }}px;
+  }
 
-    .db-cta_1__button:hover {
-        background-color: {{ block.settings.button_hover_background_color }};
-        color: {{ block.settings.button_hover_text_color }};
-    }
+  /* Content Child Elements: Ensures consistent text color and font size for all nested elements */
+  .db-cta_1__content * {
+    color: {{ block.settings.content_color }};
+    font-size: {{ block.settings.content_size }}px;
+  }
+
+  /* Button Styling: Sets visual properties and adds smooth transition on hover */
+  .db-cta_1__button {
+    background-color: {{ block.settings.button_background_color }};
+    color: {{ block.settings.button_text_color }};
+    border: 1px solid {{ block.settings.button_border_color }};
+    border-radius: {{ block.settings.button_border_radius }}px;
+    padding: {{ block.settings.button_padding_top_bottom }}px {{ block.settings.button_padding_left_right }}px;
+    font-size: {{ block.settings.button_font_size }}px;
+    font-weight: {{ block.settings.button_font_weight }};
+    display: inline-block;
+    text-decoration: none;
+    line-height: 1;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  /* Button Hover State: Inverts colors for an interactive feel */
+  .db-cta_1__button:hover {
+    background-color: {{ block.settings.button_hover_background_color }};
+    color: {{ block.settings.button_hover_text_color }};
+  }
 </style>
 
 <div class="db-cta_1 {{ block.settings.custom_classes }}">
+  {%- comment -%} Check if a title is provided before rendering the header {%- endcomment -%}
   {% if block.settings.title != blank %}
     <h2 class="db-cta_1__header">{{ block.settings.title }}</h2>
   {% endif %}
+
+  {%- comment -%} Check if content is provided before rendering the content container {%- endcomment -%}
   {% if block.settings.content != blank %}
     <div class="db-cta_1__content">{{ block.settings.content }}</div>
   {% endif %}
+
+  {%- comment -%} Render button only if both text and URL are provided {%- endcomment -%}
   {% if block.settings.button_text != blank and block.settings.button_url != blank %}
     <a href="{{ block.settings.button_url }}" class="db-cta_1__button" aria-label="{{ block.settings.button_text }}">
       {{- block.settings.button_text -}}
